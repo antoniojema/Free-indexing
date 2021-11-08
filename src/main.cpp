@@ -4,16 +4,8 @@
 
 int main() {
     NDArray<real_t, 3> arr1 {{0,-1, 1}, {10, 9, 12}};
-    NDArray<real_t, 3> arr2 {{0, 10}, {-1, 9}, {1, 12}};
-    NDArray<real_t, 3> arr3 {{{0, 10}, {-2, 9}, {1, 13}}};
-    NDArray<real_t, 3> arr5 {10, 11, 12};
-    NDArray<real_t, 3> arr6 {{10, 11, 12}};
-
     arr1.resize({0,-1, 1}, {10, 9, 12});
-    //arr2.resize({0, 10}, {-1, 9}, {1, 12});
-    arr3.resize({{0, 10}, {-2, 9}, {1, 13}});
-    arr5.resize(10, 11, 12);
-    arr6.resize({10, 11, 12});
+    arr1.rebound({0,-1, 1}, {10, 9, 12});
     
     //lim_t i0 = -5;
     //lim_t i1 = 10;

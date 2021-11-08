@@ -28,8 +28,10 @@ public:
 
     //void resize(const std::array<std::array<lim_t, 2>,1> lims);
     void resize(const size_t size);
+    void resize(const std::array<lim_t,1>& i0, const std::array<lim_t,1>& i1);
     void resize(const lim_t i0, const lim_t i1);
     
+    void rebound(const std::array<lim_t,1>& i0, const std::array<lim_t,1>& i1);
     void rebound(const lim_t i0, const lim_t i1);
 
     void push_back(const T value);

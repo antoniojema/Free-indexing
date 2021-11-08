@@ -42,18 +42,14 @@ template <typename T>
 /****************/
 /*    Resize    */
 /****************/
-//template <typename T>
-///*inline*/void NDArray<T,1>::resize(const std::array<std::array<lim_t, 2>,1> lims) {
-//    if (lims[0][1] >= lims[0][0]) {
-//        this->lims = lims;
-//        this->std::vector<T>::resize((size_t) (lims[0][1] - lims[0][0]));
-//        this->movedPoint();
-//    }
-//}
-
 template <typename T>
 /*inline*/void NDArray<T,1>::resize(const size_t size) {
     this->resize((lim_t) 0, (lim_t) size);
+}
+
+template <typename T>
+/*inline*/void NDArray<T,1>::resize(const std::array<lim_t,1>& i0, const std::array<lim_t,1>& i1) {
+    this->resize(i0[0], i1[0]);
 }
 
 template <typename T>
@@ -82,6 +78,11 @@ template <typename T>
 /*    Rebound    */
 /*****************/
 template <typename T>
+/*inline*/void NDArray<T,1>::rebound(const std::array<lim_t,1>& i0, const std::array<lim_t,1>& i1) {
+    this->rebound(i0[0], i1[0]);
+}
+
+template <typename T>
 /*inline*/void NDArray<T,1>::rebound(const lim_t i0, const lim_t i1) {
     if (i1 >= i0) {
         lim_t old_i0 = this->lim0();
@@ -94,9 +95,9 @@ template <typename T>
     }
 }
 
-/*****************/
-/*    Rebound    */
-/*****************/
+/***************************/
+/*    Push/Emplace back    */
+/***************************/
 template <typename T>
 /*inline*/void NDArray<T,1>::push_back(const T value) {
     this->getVector().push_back(value);

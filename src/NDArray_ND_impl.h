@@ -1,24 +1,15 @@
 #pragma once
 
 #include "NDArray_ND.h"
+#include "assert.h"
 
 /*********************/
 /*    Constructor    */
 /*********************/
 template <typename T, size_t N>
-/*inline*/ NDArray<T,N>::NDArray(const std::initializer_list<size_t>& size) {
-    if (lims.size() == N){
-        this->reserve(size[0]);
-        this->resize(size);
-        }
-}
-
-template <typename T, size_t N>
-/*inline*/ NDArray<T,N>::NDArray(const std::initializer_list<std::array<lim_t,2>>& lims) {
-    if (lims.size() == N){
-        this->reserve((size_t) (lims[0][1] - lims[0][0]));
-        this->resize(lims);
-    }
+/*inline*/ NDArray<T,N>::NDArray(const std::array<size_t, N>& size) {
+    this->reserve(size.begin()[0]);
+    this->resize(size);
 }
 
 template <typename T, size_t N>
@@ -27,62 +18,46 @@ template <typename T, size_t N>
     this->resize(i0, i1);
 }
 
-///**************/
-///*    Copy    */
-///**************/
-//template <typename T, size_t N>
-///*inline*/ NDArray<T,N>::NDArray(const NDArray& arr) {
-//    *this = arr;
-//}
-//
-//template <typename T, size_t N>
-///*inline*/ NDArray<T,N>& NDArray<T,N>::operator=(const NDArray& rhs) {
-//    this->getVector() = rhs.getVector();
-//    this->lims = rhs.lims;
-//    this->moved_ptr = &this->getVector()[0];
-//    return *this;
-//}
+/**************/
+/*    Copy    */
+/**************/
+template <typename T, size_t N>
+/*inline*/ NDArray<T,N>::NDArray(const NDArray<T,N>& arr) {
+    *this = arr;
+}
+
+template <typename T, size_t N>
+/*inline*/ NDArray<T,N>& NDArray<T,N>::operator=(const NDArray<T,N>& rhs) {
+    this->getVector() = rhs.getVector();
+    this->lims = rhs.lims;
+    this->moved_ptr = &this->getVector()[0];
+    return *this;
+}
 
 /****************/
 /*    Resize    */
 /****************/
 template <typename T, size_t N>
-/*inline*/ void NDArray<T,N>::resize(const std::initializer_list<size_t>& size) {
+/*inline*/ void NDArray<T,N>::resize(const std::array<size_t,N>& size) {
     std::array<lim_t,N> i0;
     std::array<lim_t,N> i1;
     for (size_t i = 0; i < N; i++){
-        i0_down[i] = 0;
-        i1_down[i] = size[i];
+        i0[i] = 0;
+        i1[i] = size[i];
     }
-    this->resize(i0, i1)
-}
-
-template <typename T, size_t N>
-/*inline*/ void NDArray<T,N>::resize(const size_t& size...) {
-    // TODO
-}
-
-template <typename T, size_t N>
-/*inline*/ void NDArray<T,N>::resize(const std::initializer_list<std::array<lim_t,2>>& lims) {
-    std::array<lim_t,N> i0;
-    std::array<lim_t,N> i1;
-    for (size_t i = 0; i < N; i++){
-        i0_down[i] = lims[i][0];
-        i1_down[i] = lims[i][1];
-    }
-    this->resize(i0, i1)
+    this->resize(i0, i1);
 }
 
 template <typename T, size_t N>
 /*inline*/ void NDArray<T,N>::resize(const std::array<lim_t,N>& i0, const std::array<lim_t,N>& i1) {
-    if (i1[0] >= i0[0]) {
-        for (size_t i = 0; i < N; i++) {
-            this->lims[i][0] = i0[i];
-            this->lims[i][1] = i1[i];
+    bool good = true;
+    for (size_t i = 0; i < N; i++)
+        if (i0[i] < i1[i]) {
+            good = false;
+            break;
         }
-        
-        this->getVector().resize((size_t) (i1[0] - i0[0]));
-        this->movedPoint();
+    if (good) {
+        this->resize1D(i0, i1);
         
         std::array<lim_t,N-1> i0_down;
         std::array<lim_t,N-1> i1_down;
@@ -108,56 +83,55 @@ template <typename T, size_t N>
     return lims[dim][1];
 }
 
-///*****************/
-///*    Rebound    */
-///*****************/
-//template <typename T, size_t N>
-///*inline*/ void NDArray<T,N>::rebound(const lim_t i0[N], const lim_t i1[N]) {
-//    if (i1 >= i0) {
-//        lim_t old_i0 = this->lim0();
-//        lim_t old_i1 = this->lim1();
-//        NDArray old_arr = *this;
-//        
-//        this->resize(i0, i1);
-//        for (lim_t i = std::max(i0, old_i0); i < std::min(i1, old_i1); i++)
-//            (*this)[i] = old_arr[i];
-//        
-//        for (lim_t i = this->lims[0][0]; i < this->lims[0][1]; i++)
-//            (*this)[i].rebound(i0, i1);
-//    }
-//}
-//
-//template <typename T, size_t N>
-///*inline*/ void NDArray<T,N>::rebound(const std::array<lim_t,N>& i0, const std::array<lim_t,N>& i1) {
-//    if (i1 >= i0) {
-//        lim_t old_i0 = this->lim0();
-//        lim_t old_i1 = this->lim1();
-//        NDArray old_arr = *this;
-//        
-//        this->resize(i0, i1);
-//        for (lim_t i = std::max(i0, old_i0); i < std::min(i1, old_i1); i++)
-//            (*this)[i] = old_arr[i];
-//        
-//        for (lim_t i = this->lims[0][0]; i < this->lims[0][1]; i++)
-//            (*this)[i].rebound(i0, i1);
-//    }
-//}
-//
-//template <typename T, size_t N>
-///*inline*/ void NDArray<T,N>::rebound(const std::array<std::array<lim_t,2>,N>& lims) {
-//    if (i1 >= i0) {
-//        lim_t old_i0 = this->lim0();
-//        lim_t old_i1 = this->lim1();
-//        NDArray old_arr = *this;
-//        
-//        this->resize(lims);
-//        for (lim_t i = std::max(i0, old_i0); i < std::min(i1, old_i1); i++)
-//            (*this)[i] = old_arr[i];
-//        
-//        for (lim_t i = this->lims[0][0]; i < this->lims[0][1]; i++)
-//            (*this)[i].rebound(lims);
-//    }
-//}
+/*****************/
+/*    Rebound    */
+/*****************/
+template <typename T, size_t N>
+/*inline*/ void NDArray<T,N>::rebound(const std::array<lim_t,N>& i0, const std::array<lim_t,N>& i1) {
+    bool good = true;
+    for (size_t i = 0; i < N; i++)
+        if (i0[i] < i1[i]) {
+            good = false;
+            break;
+        }
+    if (good) {
+        lim_t old_i0 = this->lims[0][0];
+        lim_t old_i1 = this->lims[0][1];
+        NDArray old_arr = *this;
+        
+        this->resize1D(i0, i1);
+
+        for (lim_t i = std::max(i0[0], old_i0); i < std::min(i1[0], old_i1); i++)
+            (*this)[i] = old_arr[i];
+        
+        std::array<lim_t,N-1> i0_down;
+        std::array<lim_t,N-1> i1_down;
+        for (size_t i = 0; i < N-1; i++){
+            i0_down[i] = i0[i+1];
+            i1_down[i] = i1[i+1];
+        }
+        for (auto& e : *this)
+            e.rebound(i0_down, i1_down);
+    }
+}
+
+/***************************/
+/*    Push/Emplace back    */
+/***************************/
+template <typename T, size_t N>
+/*inline*/void NDArray<T,N>::push_back(const NDArray<T,N-1>& value) {
+    this->getVector().push_back(value);
+    this->lims[0][1] ++;
+    this->movedPoint();
+}
+
+template <typename T, size_t N>
+template<class... Args>
+/*inline*/void NDArray<T,N>::emplace_back(Args&&... args) {
+    this->getVector().emplace_back(args...);
+    this->lims[0][1] ++;
+    this->movedPoint();
+}
 
 /****************/
 /*    Access    */
@@ -187,10 +161,20 @@ template <typename T, size_t N>
     return static_cast<const std::vector<NDArray<T,N-1>>&>(*this);
 }
 
-/*********************/
-/*    Moved point    */
-/*********************/
+/*****************/
+/*    Private    */
+/*****************/
 template <typename T, size_t N>
 /*inline*/void NDArray<T,N>::movedPoint() {
-    this->moved_ptr = &this->getVector()[0] - this->lims[0];
+    this->moved_ptr = &this->getVector()[0] - this->lims[0][0];
+}
+
+template <typename T, size_t N>
+/*inline*/void NDArray<T,N>::resize1D(const std::array<lim_t,N>& i0, const std::array<lim_t,N>& i1) {
+    for (size_t i = 0; i < N; i++) {
+        this->lims[i][0] = i0[i];
+        this->lims[i][1] = i1[i];
+    }
+    this->getVector().resize((size_t) (i1[0] - i0[0]));
+    this->movedPoint();
 }

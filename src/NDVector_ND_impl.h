@@ -76,7 +76,7 @@ template <typename T, size_t N>
 /*inline*/ void NDVector<T,N>::rebound(const std::array<lim_t,N>& i0, const std::array<lim_t,N>& i1) {
     bool good = true;
     for (size_t i = 0; i < N; i++)
-        if (i0[i] < i1[i]) {
+        if (i0[i] > i1[i]) {
             good = false;
             break;
         }
@@ -155,39 +155,10 @@ template <typename T, size_t N>
 }
 
 template <typename T, size_t N>
-/*inline*/ void NDVector<T,N>::push_front(const ElementType& value) {
-    this->getVector().push_back(value);
-    this->lims[0][1] ++;
-    this->movedPoint();
-}
-
-template <typename T, size_t N>
 template<class... Args>
 /*inline*/ void NDVector<T,N>::emplace_back(Args&&... args) {
     this->getVector().emplace_back(args...);
     this->lims[0][1] ++;
-    this->movedPoint();
-}
-
-template <typename T, size_t N>
-template<class... Args>
-/*inline*/ void NDVector<T,N>::emplace_front(Args&&... args) {
-    this->getVector().emplace_back(args...);
-    this->lims[0][1] ++;
-    this->movedPoint();
-}
-
-template <typename T, size_t N>
-/*inline*/void NDVector<T,N>::pop_back() {
-    this->getVector().pop_back();
-    this->lims[0][1] --;
-    this->movedPoint();
-}
-
-template <typename T, size_t N>
-/*inline*/void NDVector<T,N>::pop_front() {
-    this->getVector().pop_front();
-    this->lims[0][0] ++;
     this->movedPoint();
 }
 

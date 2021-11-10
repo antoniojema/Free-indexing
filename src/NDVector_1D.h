@@ -2,7 +2,7 @@
 
 #include "NDVector_ND.h"
 #include "typedef.h"
-#include <deque>
+#include <vector>
 #include <array>
 
 /*
@@ -12,11 +12,11 @@
   range may begin at any positive or negative index.
 */
 template <typename T>
-class NDVector<T,1> : private std::deque<T> {
+class NDVector<T,1> : private std::vector<T> {
 private:
     using ValueType = T;
     using ElementType = T;
-    using ContainerType = std::deque<ElementType>;
+    using ContainerType = std::vector<ElementType>;
 
 public:
     NDVector() = default;
@@ -44,11 +44,7 @@ public:
     void resize(const lim_t i0, const lim_t i1);
 
     void push_back(const T value);
-    void push_front(const T value);
     template<class... Args> void emplace_back(Args&&... args);
-    template<class... Args> void emplace_front(Args&&... args);
-    void pop_back();
-    void pop_front();
 
     ElementType& operator[](lim_t n);
     const ElementType& operator[](lim_t n) const;

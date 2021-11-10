@@ -123,39 +123,10 @@ template <typename T>
 }
 
 template <typename T>
-/*inline*/void NDVector<T,1>::push_front(const T value) {
-    this->getVector().push_front(value);
-    this->lims[0] --;
-    this->movedPoint();
-}
-
-template <typename T>
 template<class... Args>
 /*inline*/void NDVector<T,1>::emplace_back(Args&&... args) {
     this->getVector().emplace_back(args...);
     this->lims[1] ++;
-    this->movedPoint();
-}
-
-template <typename T>
-template<class... Args>
-/*inline*/void NDVector<T,1>::emplace_front(Args&&... args) {
-    this->getVector().emplace_front(args...);
-    this->lims[0] --;
-    this->movedPoint();
-}
-
-template <typename T>
-/*inline*/void NDVector<T,1>::pop_back() {
-    this->getVector().pop_back();
-    this->lims[1] --;
-    this->movedPoint();
-}
-
-template <typename T>
-/*inline*/void NDVector<T,1>::pop_front() {
-    this->getVector().pop_front();
-    this->lims[0] ++;
     this->movedPoint();
 }
 

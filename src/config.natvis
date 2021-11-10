@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="utf-8"?>
+<AutoVisualizer xmlns="http://schemas.microsoft.com/vstudio/debugger/natvis/2010">
+
+  <!-- Type NDArray<*,*> -->
+  <Type Name="NDArray&lt;*,*&gt;">
+    <DisplayString>{{ size={lims[0][1]-lims[0][0]} }}</DisplayString>
+    <Expand>
+
+      <Item Name="[size]">lims[0][1]-lims[0][0]</Item>
+      <Item Name="[index ini]">lims[0][0]</Item>
+      <Item Name="[index fin]">lims[0][1]</Item>
+
+      <CustomListItems>
+        <Variable Name="i" InitialValue="lims[0][0]"/>
+        <Size>lims[0][1]-lims[0][0]</Size>
+        <Loop>
+          <Item Name='[{i}]'>moved_ptr[i]</Item>
+          <Exec>i++</Exec>
+        </Loop>
+      </CustomListItems>
+
+    </Expand>
+  </Type>
+
+  <!-- Type NDVector<*,*> -->
+  <Type Name="NDVector&lt;*,*&gt;">
+    <DisplayString>{{ size={lims[0][1]-lims[0][0]} }}</DisplayString>
+    <Expand>
+
+      <Item Name="[size]">lims[0][1]-lims[0][0]</Item>
+      <Item Name="[index ini]">lims[0][0]</Item>
+      <Item Name="[index fin]">lims[0][1]</Item>
+
+      <CustomListItems>
+        <Variable Name="i" InitialValue="lims[0][0]"/>
+        <Size>lims[0][1]-lims[0][0]</Size>
+        <Loop>
+          <Item Name='[{i}]'>moved_ptr[i]</Item>
+          <Exec>i++</Exec>
+        </Loop>
+      </CustomListItems>
+
+    </Expand>
+  </Type>
+
+  <!-- Type NDArray<*,1> -->
+  <Type Name="NDArray&lt;*,1&gt;">
+    <DisplayString>{{ size={lims[1]-lims[0]} }}</DisplayString>
+    <Expand>
+
+      <Item Name="[size]">lims[1]-lims[0]</Item>
+      <Item Name="[index ini]">lims[0]</Item>
+      <Item Name="[index fin]">lims[1]</Item>
+
+      <CustomListItems>
+        <Variable Name="i" InitialValue="lims[0]"/>
+        <Size>lims[1]-lims[0]</Size>
+        <Loop>
+          <Item Name='[{i}]'>moved_ptr[i]</Item>
+          <Exec>i++</Exec>
+        </Loop>
+      </CustomListItems>
+
+    </Expand>
+  </Type>
+
+  <!-- Type NDVector<*,1> -->
+  <Type Name="NDVector&lt;*,1&gt;">
+    <DisplayString>{{ size={lims[1]-lims[0]} }}</DisplayString>
+    <Expand>
+
+      <Item Name="[size]">lims[1]-lims[0]</Item>
+      <Item Name="[index ini]">lims[0]</Item>
+      <Item Name="[index fin]">lims[1]</Item>
+
+      <CustomListItems>
+        <Variable Name="i" InitialValue="lims[0]"/>
+        <Size>lims[1]-lims[0]</Size>
+        <Loop>
+          <Item Name='[{i}]'>moved_ptr[i]</Item>
+          <Exec>i++</Exec>
+        </Loop>
+      </CustomListItems>
+
+    </Expand>
+  </Type>
+  
+  <!-- Type NDArray<*,2> -->
+  <Type Name="NDArray&lt;*,2&gt;">
+    <DisplayString>{{ lims = {{{lims[0][0]},{lims[1][0]}}, {{{lims[0][1]},{lims[1][1]}} }}</DisplayString>
+    <Expand>
+
+      <CustomListItems>
+        <Variable Name="i" InitialValue="lims[0][0]"/>
+        <Variable Name="j" InitialValue="lims[1][0]"/>
+        <Size>(lims[0][1]-lims[0][0])*(lims[1][1]-lims[1][0])</Size>
+        <Loop>
+          <Item Name='[{i}][{j}]'>moved_ptr[i].moved_ptr[j]</Item>
+          <Exec>j++</Exec>
+          <If Condition='j==lims[1][1]'>
+            <Exec>j=lims[1][0]</Exec>
+            <Exec>i++</Exec>
+          </If>
+        </Loop>
+      </CustomListItems>
+
+    </Expand>
+  </Type>
+  
+  <!-- Type NDVector<*,2> -->
+  <Type Name="NDVector&lt;*,2&gt;">
+    <DisplayString>{{ lims = {{{lims[0][0]},{lims[1][0]}}, {{{lims[0][1]},{lims[1][1]}} }}</DisplayString>
+    <Expand>
+
+      <CustomListItems>
+        <Variable Name="i" InitialValue="lims[0][0]"/>
+        <Variable Name="j" InitialValue="lims[1][0]"/>
+        <Size>(lims[0][1]-lims[0][0])*(lims[1][1]-lims[1][0])</Size>
+        <Loop>
+          <Item Name='[{i}][{j}]'>moved_ptr[i].moved_ptr[j]</Item>
+          <Exec>j++</Exec>
+          <If Condition='j==lims[1][1]'>
+            <Exec>j=lims[1][0]</Exec>
+            <Exec>i++</Exec>
+          </If>
+        </Loop>
+      </CustomListItems>
+
+    </Expand>
+  </Type>
+  
+  <!-- Type NDArray<*,3> -->
+  <Type Name="NDArray&lt;*,3&gt;">
+    <DisplayString>{{ lims = {{{lims[0][0]},{lims[1][0]},{lims[2][0]}}, {{{lims[0][1]},{lims[1][1]},{lims[2][1]}} }}</DisplayString>
+    <Expand>
+
+      <CustomListItems>
+        <Variable Name="i" InitialValue="lims[0][0]"/>
+        <Variable Name="j" InitialValue="lims[1][0]"/>
+        <Variable Name="k" InitialValue="lims[2][0]"/>
+        <Size>(lims[0][1]-lims[0][0])*(lims[1][1]-lims[1][0])*(lims[2][1]-lims[2][0])</Size>
+        <Loop>
+
+          <Item Name='[{i}][{j}][{k}]'>moved_ptr[i].moved_ptr[j]</Item>
+
+          <Exec>k++</Exec>
+          <If Condition='k==lims[2][1]'>
+            <Exec>k=lims[2][0]</Exec>
+            <Exec>j++</Exec>
+            <If Condition='j==lims[1][1]'>
+              <Exec>j=lims[1][0]</Exec>
+              <Exec>i++</Exec>
+            </If>
+          </If>
+
+        </Loop>
+      </CustomListItems>
+
+    </Expand>
+  </Type>
+  
+  <!-- Type NDVector<*,3> -->
+  <Type Name="NDVector&lt;*,3&gt;">
+    <DisplayString>{{ lims = {{{lims[0][0]},{lims[1][0]},{lims[2][0]}}, {{{lims[0][1]},{lims[1][1]},{lims[2][1]}} }}</DisplayString>
+    <Expand>
+
+      <CustomListItems>
+        <Variable Name="i" InitialValue="lims[0][0]"/>
+        <Variable Name="j" InitialValue="lims[1][0]"/>
+        <Variable Name="k" InitialValue="lims[2][0]"/>
+        <Size>(lims[0][1]-lims[0][0])*(lims[1][1]-lims[1][0])*(lims[2][1]-lims[2][0])</Size>
+        <Loop>
+
+          <Item Name='[{i}][{j}][{k}]'>moved_ptr[i].moved_ptr[j]</Item>
+
+          <Exec>k++</Exec>
+          <If Condition='k==lims[2][1]'>
+            <Exec>k=lims[2][0]</Exec>
+            <Exec>j++</Exec>
+            <If Condition='j==lims[1][1]'>
+              <Exec>j=lims[1][0]</Exec>
+              <Exec>i++</Exec>
+            </If>
+          </If>
+
+        </Loop>
+      </CustomListItems>
+
+    </Expand>
+  </Type>
+  
+</AutoVisualizer>

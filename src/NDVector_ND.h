@@ -1,7 +1,7 @@
 #pragma once
 
 #include "typedef.h"
-#include <deque>
+#include <vector>
 #include <array>
 
 /*
@@ -10,11 +10,11 @@
   ranges may begin at any positive or negative index.
 */
 template <typename T, size_t N>
-class NDVector : private std::deque<NDVector<T, N-1>> {
+class NDVector : private std::vector<NDVector<T, N-1>> {
 private:
     using ValueType = T;
     using ElementType = NDVector<T, N-1>;
-    using ContainerType = std::deque<ElementType>;
+    using ContainerType = std::vector<ElementType>;
 
 public:
     NDVector() = default;
@@ -39,11 +39,7 @@ public:
     void resize(const std::array<lim_t,N>& i0, const std::array<lim_t,N>& i1);
 
     void push_back(const ElementType& value);
-    void push_front(const ElementType& value);
     template<class... Args> void emplace_back(Args&&... args);
-    template<class... Args> void emplace_front(Args&&... args);
-    void pop_back();
-    void pop_front();
 
     void shrink_to_fit();
     

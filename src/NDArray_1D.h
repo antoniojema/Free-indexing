@@ -18,6 +18,8 @@ public:
     
     NDArray(const NDArray& rhs);
 
+    ~NDArray();
+
     void reset(const std::array<lim_t,1>& i0, const std::array<lim_t,1>& i1);
     void reset(const lim_t i0, const lim_t i1);
     

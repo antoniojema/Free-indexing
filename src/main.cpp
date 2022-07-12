@@ -6,10 +6,10 @@
 #include <array>
 
 int main() {
-    NDArray<float, 1> arr = {-3,2};
+    NDArray<real_t, 1> arr = {-3,2};
     arr = -4.3;
 
-    NDVector<float, 1> vec = {-3,2};
+    NDVector<real_t, 1> vec = {-3,2};
     vec = 1.1;
 
     NDArray<double, 3> arr2 = {{-3,2,3},{2,3,4}};
@@ -39,8 +39,8 @@ int main() {
     //    e;
     //}
 
-    //NDArray<float, 2> a1 {{-4, -3}, {0, 2}};
-    //NDArray<float, 2> a2 {{5, 2}};
+    //NDArray<real_t, 2> a1 {{-4, -3}, {0, 2}};
+    //NDArray<real_t, 2> a2 {{5, 2}};
 
     //a1 = 3.5;
     //a2 = -7.3;
@@ -60,8 +60,8 @@ int main() {
     //std::cout << std::endl;
     
 
-    //lim_t i0 = -5;
-    //lim_t i1 = 10;
+    //ssize_t i0 = -5;
+    //ssize_t i1 = 10;
     //size_t size = (size_t) (i1-i0);
     //
     //NDVector<real_t, 1> arr {i0, i1};
@@ -96,7 +96,7 @@ int main() {
     //std::cout << std::endl;
 
     //std::cout << "NDVector (element-wise):" << std::endl;
-    //for (lim_t i = i0; i < i1; i++) {
+    //for (ssize_t i = i0; i < i1; i++) {
     //   std::cout << arr[i] << std::endl;
     //}
     //std::cout << std::endl;
@@ -130,7 +130,7 @@ int main() {
     //std::cout << std::endl;
 
     //std::cout << "NDVector (element-wise):" << std::endl;
-    //for (lim_t i = i0; i < i1; i++) {
+    //for (ssize_t i = i0; i < i1; i++) {
     //   std::cout << arr[i] << std::endl;
     //}
     //std::cout << std::endl;

@@ -171,7 +171,7 @@
         <Size>(lims[0][1]-lims[0][0])*(lims[1][1]-lims[1][0])*(lims[2][1]-lims[2][0])</Size>
         <Loop>
 
-          <Item Name='[{i}][{j}][{k}]'>moved_ptr[i].moved_ptr[j]</Item>
+          <Item Name='[{i}][{j}][{k}]'>moved_ptr[i].moved_ptr[j].moved_ptr[k]</Item>
 
           <Exec>k++</Exec>
           <If Condition='k==lims[2][1]'>

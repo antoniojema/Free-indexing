@@ -11,7 +11,6 @@
 #include <tuple>
 #include <algorithm>
 #include "globaldef.h"
-#include "arrayOp.h"
 #include "typedef.h"
 
 
@@ -71,11 +70,6 @@ public:
         return bounds[i];
     }
 
-    bool isInto (const std::array<T, D> point ) const {
-        //TODO: test
-        return AOp::ANDAll(isInto2(point));
-    }
-
     bool contains(const std::array<T, D> point, bool exclude_end = false) const {
         T sub = (exclude_end) ? 1 : 0;
         for (size_t dir = 0; dir < D; dir++)
@@ -93,42 +87,6 @@ public:
 
     bool isSupersetOf(const Box<T, D>& other) const {
         return other.isSubsetOf(*this);
-    }
-
-
-    std::array<bool,3> isInto2 (const std::array<T, D> point ) const {
-        //TODO: test
-        return AOp::AND(AOp::LESS_EQ<T,D>(bounds[0],point),
-                        AOp::LESS_EQ<T,D>(point,bounds[1]));
-    }
-
-    std::tuple<Dir,TopoElem> Topology () const {
-        Dir resDir=Dir::none;
-        TopoElem resTopo = TopoElem::none;
-        auto diffAbs = AOp::ABS(AOp::MINUS(this->e,this->i));
-
-        std::array<int_t, D> zerones;
-        std::transform(diffAbs.begin(),diffAbs.end(),zerones.begin(),
-                       [](T x ) -> int_t {return x>0 ? (int_t)1 : (int_t)0; });
-        int_t coordDiff = AOp::PLUS(zerones);
-        if (coordDiff==0){
-        }else if (coordDiff==1){
-            resTopo = TopoElem::lin;
-            auto aux = AOp::PLUS(AOp::MULT(zerones,{1,2,3}))-1;
-            resDir = static_cast<Dir>(aux);
-        }else if (coordDiff==2){
-            resTopo = TopoElem::surf;
-            std::array<int_t, D> zeronesSelf;
-            std::transform(zerones.begin(),zerones.end(),zeronesSelf.begin(),
-                       [&](int_t x ) -> int_t {return 1-x; });
-            auto aux = AOp::PLUS(AOp::MULT(zeronesSelf,{1,2,3}))-1;
-            resDir = static_cast<Dir>(aux);
-        }else if (coordDiff==3){
-            resTopo = TopoElem::vol;
-        }else{
-            //assert bug
-        }
-        return {resDir, resTopo};
     }
 
     void addPadding (const T pad){

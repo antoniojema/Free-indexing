@@ -2,6 +2,7 @@
 # Take all headers, cpps and CMakeLists
 set(HeaderList
     "box.h"
+    "globaldef.h"
     "log.h"
     "NDArray.h"
     "NDArray_impl.h"

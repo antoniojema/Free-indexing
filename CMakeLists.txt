@@ -12,7 +12,7 @@ ENDIF()
 
 # Global variables
 set(ProjectName "negative-indexing")
-set(ExeName     "main.cpp")
+set(ExeName     "main")
 set(ExeFileName "main.cpp")
 
 if (WIN32)

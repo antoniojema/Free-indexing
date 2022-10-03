@@ -6,9 +6,10 @@ on:
     branches: [ "master" ]
 jobs:
   debian_build_job:
-    runs-on: debian-latest
+    runs-on: ubuntu-latest
     name: Debian build
     steps:
     - uses: actions/checkout@v3
-    - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag ndarray:$(date +%s)
+    - name: Debian docker action
+      uses: ./
+      id: build

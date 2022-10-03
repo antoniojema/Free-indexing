@@ -1,0 +1,7 @@
+# action.yml
+name: 'Build in debian'
+author: 'Antonio'
+description: 'Builds the project in debian'
+runs:
+  using: 'docker'
+  image: 'Dockerfile'

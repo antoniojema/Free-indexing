@@ -16,11 +16,11 @@ TEST(LogClass, reOPEN_withOutExist)
     std::string line;
     file.open(Log::FNAME(Log::err));
     std::getline(file, line);
-    GTEST_ASSERT_EQ(line, "patata");
+    ASSERT_EQ(line, "patata");
     std::getline(file, line);
-    GTEST_ASSERT_EQ(line, "tomate");
+    ASSERT_EQ(line, "tomate");
     std::getline(file, line);
-    GTEST_ASSERT_EQ(line, "pera");
+    ASSERT_EQ(line, "pera");
     file.close();
     Log::OPEN();
 }
@@ -37,9 +37,9 @@ TEST(LogClass, test_LOG)
     std::string line;
     file.open(Log::FNAME(Log::log));
     std::getline(file, line);
-    GTEST_ASSERT_EQ(line, "mes-3mess-3 bmess-3 c");
+    ASSERT_EQ(line, "mes-3mess-3 bmess-3 c");
     std::getline(file, line);
-    GTEST_ASSERT_EQ(line, "mess-3 d");
+    ASSERT_EQ(line, "mess-3 d");
     file.close();
 
 }
@@ -58,11 +58,11 @@ TEST(LogClass, test_Error)
     std::string line;
     file.open(Log::FNAME(Log::err));
     std::getline(file, line);
-    GTEST_ASSERT_EQ(line, "error mes-3error mess-3 berror mess-3 cerror mes-3 aa");
+    ASSERT_EQ(line, "error mes-3error mess-3 berror mess-3 cerror mes-3 aa");
     std::getline(file, line);
-    GTEST_ASSERT_EQ(line, "error mess-3 bb");
+    ASSERT_EQ(line, "error mess-3 bb");
     std::getline(file, line);
-    GTEST_ASSERT_EQ(line, " ");
+    ASSERT_EQ(line, " ");
     file.close();
 }
 
@@ -83,10 +83,10 @@ TEST(LogClass, reOPEN)
     std::string line;
     file.open(Log::FNAME(Log::err));
     std::getline(file, line);
-    GTEST_ASSERT_EQ(line, "patata");
+    ASSERT_EQ(line, "patata");
     std::getline(file, line);
-    GTEST_ASSERT_EQ(line, "tomate");
+    ASSERT_EQ(line, "tomate");
     std::getline(file, line);
-    GTEST_ASSERT_EQ(line, "pera");
+    ASSERT_EQ(line, "pera");
     file.close();
 }

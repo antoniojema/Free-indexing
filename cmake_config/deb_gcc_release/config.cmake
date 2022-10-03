@@ -1,3 +1,11 @@
+set(FLAGS_DBG        "-ggdb -Wall -Wextra -Werror")
+set(FLAGS_OPTIM_NONE "-O0")
+set(FLAGS_OPTIM      "-O3 -Ofast")
+set(FLAGS_STL        "-lstdc++")
+set(FLAGS_STD        "-std=c++17")
+
+set (CMAKE_CXX_FLAGS "${FLAGS_STL} ${FLAGS_STD} ${FLAGS_OPTIM}")
+
 # set(FLAGS_DEBUG_INFO   "/Zi")                           # Debug information in PDB file
 # set(FLAGS_WARN         "/W5")                           # All warnings and (not) treat them as errors
 # set(FLAGS_RTC          "/RTCc /RTCs /RTCu")             # Run time Checks

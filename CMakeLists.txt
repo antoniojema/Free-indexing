@@ -1,5 +1,5 @@
 # CMake minimum version check
-cmake_minimum_required(VERSION 3.22.2)
+cmake_minimum_required(VERSION 3.11.0)
 
 #C++ standard required
 set(CMAKE_CXX_STANDARD 17)
@@ -15,9 +15,9 @@ set(ProjectName "negative-indexing")
 set(ExeName     "main")
 set(ExeFileName "main.cpp")
 
-if (WIN32)
-    set(CONFIG_FILE "${CONFIG_PATH}config.cmake")
-endif()
+set(CONFIG_FILE "${CONFIG_PATH}config.cmake")
+
+set(AllGTestProjects "")
 
 # Project name
 project(${ProjectName})
@@ -26,6 +26,9 @@ message(STATUS "> Root Project Path: " ${RootProjectPath})
 
 # Macros
 include("${PROJECT_SOURCE_DIR}/cmake_config/macros.cmake")
+
+# Enable testing
+enable_testing()
 
 # Compile options
 ## default
@@ -43,3 +46,10 @@ message(STATUS "  | CompileWithLibs.............." ${CompileWithLibs} )
 
 # Include source code
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/src)
+
+# TODO All GTest projects
+message(STATUS ${CMAKE_BINARY_DIR})
+file(REMOVE ${CMAKE_BINARY_DIR}/tests_list.txt)
+foreach(dir ${AllGTestProjects})
+    write_file(${CMAKE_BINARY_DIR}/tests_list.txt ${dir} APPEND)
+endforeach()

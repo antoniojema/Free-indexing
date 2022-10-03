@@ -55,9 +55,7 @@ MACRO(CreateLibTarget)
     SET(AllLibraries ${AllLibraries} PARENT_SCOPE)
 
     # (Windows) Compile options
-    IF (WIN32)
-        INCLUDE(${CONFIG_FILE})
-    ENDIF()
+    INCLUDE(${CONFIG_FILE})
     
     # Set _DEBUG definition
     add_compile_definitions(
@@ -135,6 +133,7 @@ MACRO(SetLibrary)
         AddToExe()
     endif()
     message("<<")
+    SET(AllGTestProjects ${AllGTestProjects} PARENT_SCOPE)
 ENDMACRO()
 
 ##########################################
@@ -186,15 +185,15 @@ MACRO(CreateMainExe)
     ENDIF()
 
     # Compile options
-    IF (WIN32)
-        INCLUDE(${CONFIG_FILE})
-    ENDIF()
+    INCLUDE(${CONFIG_FILE})
     
     # Set _DEBUG definition
     add_compile_definitions(
         "$<$<CONFIG:Debug>: _DEBUG>"
         "$<$<CONFIG:MPI_Debug>: _DEBUG>"
     )
+
+    SET(AllGTestProjects ${AllGTestProjects} PARENT_SCOPE)
 ENDMACRO()
 
 ###################################################################################
@@ -263,15 +262,21 @@ MACRO(CreateGTestTarget)
     ENDIF()
 
     # (Windows) Compile options
-    IF (WIN32)
-        INCLUDE(${CONFIG_FILE})
-    ENDIF()
+    INCLUDE(${CONFIG_FILE})
     
     # Set _DEBUG definition
     add_compile_definitions(
         "$<$<CONFIG:Debug>: _DEBUG>"
         "$<$<CONFIG:MPI_Debug>: _DEBUG>"
     )
+
+    # Discover tests for CTEST
+    include(GoogleTest)
+    gtest_add_tests(TARGET ${GTestExeName})
+    
+    # Append current GTest project to list
+    LIST(APPEND AllGTestProjects ${CMAKE_CURRENT_BINARY_DIR})
+    SET(AllGTestProjects ${AllGTestProjects} PARENT_SCOPE)
 
     #####################################################
 ENDMACRO()

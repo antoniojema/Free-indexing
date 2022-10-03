@@ -128,7 +128,7 @@ public:
     void push_back(const T value);
     template<class... Args> void emplace_back(Args&&... args);
 
-    void NDVector<T,1>::push_front(const T& value);
+    void push_front(const T& value);
     
     void shrink_to_fit();
 

@@ -19,7 +19,8 @@ COPY ./CMakeLists.txt /project/
 CMD \
     echo "--- BEGIN ---" \
     && cd /project/ \
-    && sudo /project/build_scripts/make_deb_gcc_release.sh \
+    && chmod +x ./build/make_deb_gcc_release.sh \
+    && ./build_scripts/make_deb_gcc_release.sh \
     && cmake --build ./build/deb_gcc_release \
     && cmake --build ./build/deb_gcc_release \
     && cd ./build && ctest && cd ../../ \

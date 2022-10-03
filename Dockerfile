@@ -25,4 +25,4 @@ CMD \
     && cmake --build ./build/deb_gcc_release \
     && cmake --build ./build/deb_gcc_release \
     && cd ./build && ctest && cd ../../ \
-    && printf "\n--- DONE ---"
+    && echo "--- DONE ---"

@@ -13,8 +13,6 @@ COPY ./cmake_config /project/cmake_config
 COPY ./build_scripts /project/build_scripts
 COPY ./CMakeLists.txt /project/
 
-WORKDIR /project
-
 ###########
 #   RUN   #
 ###########

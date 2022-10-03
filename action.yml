@@ -1,5 +1,5 @@
 # action.yml
-name: 'Build in debian'
+name: 'Debian build'
 author: 'Antonio'
 description: 'Builds the project in debian'
 runs:

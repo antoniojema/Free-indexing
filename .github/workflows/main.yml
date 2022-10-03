@@ -1,0 +1,14 @@
+name: Docker debian
+on:
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
+jobs:
+  debian_build_job:
+    runs-on: debian-latest
+    name: Debian build
+    steps:
+    - uses: actions/checkout@v3
+    - name: Build the Docker image
+      run: docker build . --file Dockerfile --tag ndarray:$(date +%s)
